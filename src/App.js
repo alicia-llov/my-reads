@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as BooksAPI from './BooksAPI.js';
+import BooksSection from './BooksSection.js';
 
 class App extends Component {
 
@@ -9,6 +9,11 @@ class App extends Component {
     super(props);
     this.state = {
       books: [],
+      categories: {
+        currentlyReading: [],
+        wantToRead: [],
+        finished: [],
+      },
     }
   }
 
@@ -25,13 +30,20 @@ class App extends Component {
 
   render() {
 
-    const {books} = this.state;
+    const {books, categories} = this.state;
 
     return (
       <div className="App">
-          {books.map((book) => (
-            <div>{book.title}</div>
-          ))}
+        <div className="header">
+          <div className="container">
+            <h1 className="main-title">My Reading List</h1>
+          </div>
+        </div>
+
+        <BooksSection Books={books}/>
+
+        <button className="add btn">+</button>
+
       </div>
     );
   }
