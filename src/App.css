@@ -108,6 +108,7 @@ a {
   position: absolute;
   border-radius: 50%;
   border: 0;
+  -webkit-appearance: none;
 }
 
 .move.btn { 

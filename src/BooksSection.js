@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import ModifyCatButton from './ModifyCatButton.js';
 
 class BooksSection extends Component {
 
@@ -16,7 +17,7 @@ class BooksSection extends Component {
                             <div className="book-item">
                                 <div className="book-image">
                                     <img src={book.imageLinks.smallThumbnail} />
-                                    <button className="move btn">*</button>
+                                    <ModifyCatButton />
                                 </div>
                                 <h3 className="book-title">{book.title}</h3>
                             </div>
