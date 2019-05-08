@@ -6,26 +6,28 @@ class BooksSection extends Component {
 
     render() {
 
-        const { Books } = this.props;
+
+
+        const { booksByCat, categorie, handleChange} = this.props;
 
         return (
             <div className="container">
                 <div className="book-section">
-                    <h2 className="section-title">- Dependently Category title -</h2>
+                    <h2  key={categorie.id} className="section-title">{categorie.name}</h2>           
                     <div className="books-list">
-                        {Books.map((book) => (
+                        {/*booksByCat.map((book) => (
                             <div className="book-item">
                                 <div className="book-image">
                                     <img src={book.imageLinks.smallThumbnail} />
-                                    <ModifyCatButton />
+                                    <ModifyCatButton
+                                        handleChange={handleChange}
+                                        bookID={book.id}
+                                        categories={categories} />
                                 </div>
                                 <h3 className="book-title">{book.title}</h3>
                             </div>
-                        ))}
-                        
-
+                        ))*/}                        
                     </div>
-
                 </div>             
             </div>
         );

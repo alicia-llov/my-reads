@@ -3,6 +3,7 @@ import './App.css';
 import * as BooksAPI from './BooksAPI.js';
 import BooksSection from './BooksSection.js';
 import ModifyCatButton from './ModifyCatButton.js';
+import AddBooks from './AddBooks.js'
 
 const categories = [
         {
@@ -29,7 +30,8 @@ class App extends Component {
         1: [],
         2: [],
         3: []
-      }
+      },
+      screen: 'book-list'
     }
   }
 
@@ -53,18 +55,18 @@ class App extends Component {
     }, {})
 
 
+  /* Function for creating booksByCategorie object: VER SI ES NECESARIO HACERLO SIQUIERA
+  Para crearlo dinámicamente:
+  Voy a coger todos los id de categories y los voy a meter en un array.
+  Iterar por ese array, y cada uno de los valores del array va a ser el [key]: value an empty array.  */
 
 
-  /* Function for creating booksByCategorie object 
-    Este es el objeto que voy a utilizar para pintar
-    Aquí voy a declarar la función que me va a recoger el valor del select --> y me va a enviar el categorie, y el book-id
+
+   /* 
+    Aquí voy a declarar la función que me va a recoger el valor modify button --> y me va a enviar el categorie, y el book-id
 
     Necesito: los props que me llegarán del hijo: el id de la cat y el id del book.
     Tengo que coger bookID, recorrer el books y coger el objeto que coindica con el key. 
-
-    Para crear el objeto:
-    Primero recorro el objeto booksByCat con el id de la cat. Si no existe el id de la categoría --> Creo el key desde el id de la categoria e introduzco el object book,
-    Si existe introduzco el bookObject en el cat.books con un push.
   */
 
 
@@ -80,7 +82,29 @@ class App extends Component {
                   [categorieID]: this.state.booksByCat[categorieID].concat(bookRearrange[bookID]) }
     }))
   }
+
+  /** Función que va a pintar las diferentes categorías siempre y cuando haya al menos un elemento en el array. 
+   * Antes de cada título...
+                          * Esto tiene que ir por booksByCat
+                          * Vas al primer booksbycat...
+                          * si está vacío..no pintas nada
+                          * si está lleno, el título lo coges matcheando: el key en el que se encuentra con 
+                          * 
+                          * 
+  * Tengo que acabar pasándole un catID y un bookID
+                      */
   
+bookSection = (categories) => {
+ const catInfo = categories.map((categorie) => (
+    Object.values(categorie)
+ ))
+
+ const catID = categories.map((categorie) => (
+   this.state.booksByCat[categorie.id].length > 0
+   
+ ))
+ console.log("categorie", catID)
+}
 
 
   render() {
@@ -97,22 +121,31 @@ class App extends Component {
 
         <div className="container">
                 <div className="book-section">
-                    <h2 className="section-title">- Temporal All Books Section -</h2>
-                    <div className="books-list">
-                        {books.map((book) => (
-                            <div className="book-item" key={book.id}>
-                                <div className="book-image">
-                                    <img src={book.imageLinks.smallThumbnail} />
-                                    <ModifyCatButton 
-                                      handleChange={this.handleChange}
-                                      bookID={book.id}
-                                      categories={categories}
-                                    />     
-                                </div>
-                                <h3 className="book-title">{book.title}</h3>
-                            </div>
-                        ))}
-                    </div>
+                    <h2 className="section-title">- Add Books to your lists! -</h2>
+                    {/* Esto será la página aparte con react router */}
+
+                      <AddBooks
+                        allBooks={books}
+                        categories={categories}
+                        handleChange={this.handleChange} />
+
+                      {/**  Antes de cada título...
+                          * Esto tiene que ir por booksByCat
+                          * Vas al primer booksbycat...
+                          * si está vacío..no pintas nada
+                          * si está lleno, el título lo coges matcheando: el key en el que se encuentra con 
+                      */}
+
+                      {categories.map((categorie) => (
+                        this.state.booksByCat[categorie.id] === this.state.booksByCat[categorie.id].length > 0 && <div>hola</div>
+                      ))}
+
+                      {/**<BooksSection
+                        booksByCat={booksByCat}
+                        categorie={categorie}
+                        handleChange={this.handleChange} />*/}
+
+                        {console.log("categorieFun", this.bookSection(categories))}
                 </div>             
             </div>
         <button className="add btn">+</button>
