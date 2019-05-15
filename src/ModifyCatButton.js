@@ -3,33 +3,26 @@ import './App.css';
 
 class ModifyCatButton extends Component {
 
+    handleChange = (e) => {
+        e.preventDefault();
+        const { updateShelf, currentBook} = this.props;
+        updateShelf(currentBook, e.target.value);
+
+    }
+
     /** Todo, necesito el id de las categorias, ese va a ser el value */
     render() {
 
-        const { handleChange, bookID, categories } = this.props;
+        const {shelfList, currentBookShelf } = this.props;
 
         return (
-
-
-
-<form>
-    <select 
-    className="move btn" 
-    onChange={handleChange}
-    value=""
-    id={bookID}>
-        <option value="" defaultValue></option>
-        <option disabled>Move to...</option>
-        {categories.map((categorie) => (
-            <option 
-            key={categorie.id}
-            value={categorie.id}>{categorie.name}</option>
-        ))} 
-    </select>              
-</form>
-
-
-
+                <select className="move btn" onChange={this.handleChange} value={ currentBookShelf }>
+                    {shelfList.map((shelf) => {
+                            return <option
+                                        key={shelf}
+                                        value={shelf}                                    
+                                        name={shelf}>{shelf}</option>})}                 
+                </select>              
         );
     }
 }
